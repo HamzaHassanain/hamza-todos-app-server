@@ -15,6 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const Debug_1 = __importDefault(require("../utils/Debug"));
+const TodosSchema = new mongoose_1.Schema({
+    text: {
+        type: String,
+        required: true,
+    },
+    done: {
+        type: Boolean,
+        default: false,
+    },
+});
 const UserSchema = new mongoose_1.Schema({
     name: {
         required: true,
@@ -30,6 +40,7 @@ const UserSchema = new mongoose_1.Schema({
         required: true,
         type: String,
     },
+    todos: [TodosSchema],
 });
 UserSchema.method("compare", function (password) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -42,7 +53,6 @@ UserSchema.method("compare", function (password) {
             Debug_1.default.error("Error at compare function", error);
             return false;
         }
-        return false;
     });
 });
 exports.default = (0, mongoose_1.model)("User", UserSchema);

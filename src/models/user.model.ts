@@ -1,8 +1,22 @@
 import { Schema, model } from "mongoose";
-import { IUser, UserModel, IUserMethods } from "../interfaces/user.interface";
-import { Status } from "../utils/consts";
+import {
+  IUser,
+  UserModel,
+  IUserMethods,
+  ITodos,
+} from "../interfaces/user.interface";
 import bcrypt from "bcrypt";
 import Debug from "../utils/Debug";
+const TodosSchema = new Schema<ITodos>({
+  text: {
+    type: String,
+    required: true,
+  },
+  done: {
+    type: Boolean,
+    default: false,
+  },
+});
 const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   name: {
     required: true,
@@ -18,6 +32,7 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
     required: true,
     type: String,
   },
+  todos: [TodosSchema],
 });
 UserSchema.method("compare", async function (password: string) {
   try {
@@ -28,6 +43,5 @@ UserSchema.method("compare", async function (password: string) {
     Debug.error("Error at compare function", error);
     return false;
   }
-  return false;
 });
 export default model<IUser, UserModel>("User", UserSchema);

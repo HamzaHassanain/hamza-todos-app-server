@@ -1,4 +1,10 @@
-import { Document, Model } from "mongoose";
+import { Document, Model, Types } from "mongoose";
+export interface ITodos {
+  _id: Types.ObjectId;
+  text: string;
+  done: boolean;
+}
+
 export interface ITokenData {
   email: string;
   name: string;
@@ -21,6 +27,7 @@ export interface IUser {
   email: string;
   name: string;
   encrypted_password: string;
+  todos: ITodos[];
 }
 export interface IUserMethods {
   compare(password: string): boolean;
