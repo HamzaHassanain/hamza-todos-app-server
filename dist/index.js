@@ -37,6 +37,9 @@ app.use(express_1.default.json());
 // app.use(cookieParser());
 app.use("/auth/", auth_route_1.default);
 app.use("/user/", user_route_1.default);
+app.get("/", (req, res) => {
+    res.json({ message: "app is running properly ... ;}" });
+});
 app.use(ErrorHandler_1.default);
 mongoose_1.default.set("strictQuery", false);
 mongoose_1.default

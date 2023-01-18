@@ -40,8 +40,10 @@ app.use(express.json());
 
 app.use("/auth/", authRouter);
 app.use("/user/", userRouter);
+app.get("/", (req, res) => {
+  res.json({ message: "app is running properly ... ;}" });
+});
 app.use(ErrorHandler);
-
 mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.DB_URL)
