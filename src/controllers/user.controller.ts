@@ -13,6 +13,7 @@ export const updateUserController = async (
 ) => {
   const { name } = req.body;
   const [type, token] = req.headers.authorization?.split(" ");
+  Debug.info(type,token) 
   try {
     if (name && name.length >= 6) {
       const user = await userModel.findOne({ email: req.user.email });
@@ -20,7 +21,7 @@ export const updateUserController = async (
       user.name = name;
       await user.save();
       req.user.name = name;
-      const response = new SuccessResponse({ ...req.user, token });
+      const response = new SuccessResponse({ user : {...req.user, token} });
       res.json(response);
     } else
       throw new AuthError("Cannot update name!", {
